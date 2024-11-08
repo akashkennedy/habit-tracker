@@ -16,13 +16,17 @@ const habitSlice = createSlice({
       if (habit) {
         habit.status = "completed";
         habit.streak += 1;
+        if (habit.status !== "completed") {
+          habit.streak += 1;
+          habit.staus = "completed";
+        }
       }
     },
     markAsSkipped: (state, action: PayloadAction<number>) => {
       const habit = state.find((habit) => habit.id === action.payload);
       if (habit) {
         habit.status = "skipped";
-        habit.streak -= 1;
+        habit.streak = 0;
       }
     },
   },
