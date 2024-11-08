@@ -8,18 +8,21 @@ const habitSlice = createSlice({
   initialState,
   reducers: {
     addHabit: (state, action: PayloadAction<Habit>) => {
-      state.push(action.payload);
+      const newHabit = { ...action.payload, streak: 0 };
+      state.push(newHabit);
     },
     markAsCompleted: (state, action: PayloadAction<number>) => {
       const habit = state.find((habit) => habit.id === action.payload);
       if (habit) {
         habit.status = "completed";
+        habit.streak += 1;
       }
     },
     markAsSkipped: (state, action: PayloadAction<number>) => {
       const habit = state.find((habit) => habit.id === action.payload);
       if (habit) {
         habit.status = "skipped";
+        habit.streak -= 1;
       }
     },
   },
